@@ -1,8 +1,10 @@
 def lockFile(rutaArchivo, fechaActual):                                        # Función para asegurar que solo exista una escritura por día
     with open(rutaArchivo, "r", encoding="utf-8") as lastVer:   # se abre el archivo en modo "read"
-        fechaFormateada = fechaActual.strftime("%d/%m")
-        lastEntry = lastVer.readlines()[-2]                     # leer la última entrada en el archivo
-        if lastEntry[1:6] == fechaFormateada:                   
+        diaActual = fechaActual.strftime("%d")
+        mesActual = fechaActual.strftime("%m")
+        lineas = lastVer.readlines()
+        lastEntry = lineas[-2]                                  # leer la última entrada en el archivo
+        if lastEntry[1:3] == diaActual and lastEntry[4:6] == mesActual:     
             return True                                         # si la fecha de la última entrada coincide con la fecha actual
         else:                                                   # se devuelve un valor para no permitir que se escriba el diario
             return False            
@@ -21,4 +23,4 @@ def newEntry(nomArchivo, fechaHoy):
     nomArchivo.write(f"[{dia}/{mes}({diaSemana})]: ")        # escribe la fecha a partir de los datos obtenidos previamente
     nomArchivo.write(input("¿Cómo te sientes hoy?: "))        # pide al usuario el contenido de la entrada y lo añade
     print("Tu entrada se guardó correctamente.")            # muestra un mensaje confirmando el éxito de la tarea
-    nomArchivo.write("\n" + "-"*50 + "\n")                  # deja un separador para que se distinga una entrada de otra.
+    nomArchivo.write("\n" + "-"*50 + "\n")                  # deja un separador para que se distinga una entrada de otra.s
